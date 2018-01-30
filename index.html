@@ -27,20 +27,6 @@
             aCtx.arc(aperCanvas.width/2,aperCanvas.height/2,aperCanvas.width/2,0,2*Math.PI);
             aCtx.stroke();
             aCtx.closePath();
-
-            aCtx.beginPath();
-            aCtx.arc(aperCanvas.width/2,aperCanvas.height/2,aperCanvas.width/4,0,2*Math.PI);
-            aCtx.stroke();
-            aCtx.closePath();
-
-            aCtx.beginPath();
-            aCtx.moveTo(100,0);
-            aCtx.lineTo(100,200);
-            aCtx.stroke();            
-            aCtx.moveTo(0,100);
-            aCtx.lineTo(200,100);
-            aCtx.stroke();         
-            aCtx.closePath();
         }
         function updateAperture(fStop){
             var side=aperCanvas.width/2;
@@ -49,42 +35,42 @@
             var offset=fStop*mult
             var blade1={
                 x0:0,
-                y0:(aperCanvas.width/2)*1/Math.sqrt(3)+offset,
+                y0:(aperCanvas.width/2)*Math.tan(Math.PI/6)+offset,
                 x1:aperCanvas.width/2,
                 y1:0+offset
             }
             var blade2={
-                x0:aperCanvas.width/2,
+                x0:aperCanvas.width/2-offset*1/Math.tan(Math.PI/6),
                 y0:0,
-                x1:aperCanvas.width/2+(aperCanvas.width/2)*Math.sqrt(3)/2,
-                y1:aperCanvas.height/4
+                x1:aperCanvas.width/2+(aperCanvas.width/2-offset)*Math.cos(Math.PI/6),
+                y1:aperCanvas.height/4+offset*Math.tan(Math.PI/6.8)
             }
             var blade3={
-                x0:aperCanvas.width/2+(aperCanvas.width/2)*Math.sqrt(3)/2,
+                x0:aperCanvas.width/2+(aperCanvas.width/2-offset)*Math.cos(Math.PI/6),
                 y0:0,
-                x1:aperCanvas.width/2+(aperCanvas.width/2)*Math.sqrt(3)/2,
-                y1:aperCanvas.height*3/4
+                x1:aperCanvas.width/2+(aperCanvas.width/2-offset)*Math.cos(Math.PI/6),
+                y1:aperCanvas.height*3/4-offset+offset*Math.tan(Math.PI/6.8)
             }
             var blade4={
                 x0:aperCanvas.width,
-                y0:aperCanvas.height-(aperCanvas.width/2)/Math.sqrt(3),
+                y0:aperCanvas.height-(aperCanvas.width/2)*Math.tan(Math.PI/6)-offset,
                 x1:aperCanvas.width/2,
-                y1:aperCanvas.height
+                y1:aperCanvas.height-offset
             }
             var blade5={
-                x0:aperCanvas.width/2,
+                x0:aperCanvas.width/2+offset*1/Math.tan(Math.PI/6),
                 y0:aperCanvas.height,
-                x1:aperCanvas.width/2-(aperCanvas.width/2)*Math.sqrt(3)/2,
-                y1:aperCanvas.height*3/4
+                x1:aperCanvas.width/2-(aperCanvas.width/2-offset)*Math.cos(Math.PI/6),
+                y1:aperCanvas.height*3/4-offset*Math.tan(Math.PI/6.8)
             }
             var blade6={
-                x0:aperCanvas.width/2-(aperCanvas.width/2-offset)*Math.sqrt(3)/2,
+                x0:aperCanvas.width/2-(aperCanvas.width/2-offset)*Math.cos(Math.PI/6),
                 y0:aperCanvas.height,
-                x1:aperCanvas.width/2-(aperCanvas.width/2-offset)*Math.sqrt(3)/2,
+                x1:aperCanvas.width/2-(aperCanvas.width/2-offset)*Math.cos(Math.PI/6),
                 y1:aperCanvas.height/4+offset-offset*Math.tan(Math.PI/6.8)
             }
-            //aCtx.arc(aperCanvas.width/2,aperCanvas.height/2,aperCanvas.width/2+1,0,2*Math.PI);
-           // aCtx.clip();
+            aCtx.arc(aperCanvas.width/2,aperCanvas.height/2,aperCanvas.width/2+1,0,2*Math.PI);
+            aCtx.clip();
             aCtx.clearRect(0,0,aperCanvas.width,aperCanvas.height);            
             drawBlade(blade1);
             drawBlade(blade2);
