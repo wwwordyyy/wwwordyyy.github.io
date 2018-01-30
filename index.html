@@ -1,0 +1,106 @@
+<html>
+<head>
+    <style>
+    </style>
+
+</head>
+<body>
+    <div id="apertureSegment">
+    <canvas id="apertureCanvas" width="200" height="200"></canvas>
+    <br>
+    <input type="range" id="aSlider" min="0" max="10" step="1" value="0" oninput="updateAperture(this.value)">
+    <script>
+        var aperCanvas=document.getElementById("apertureCanvas");
+        var aCtx=aperCanvas.getContext("2d");
+        
+        updateAperture(0);
+        
+        function drawBlade(blade){
+            aCtx.beginPath();
+            aCtx.moveTo(blade.x0,blade.y0);
+            aCtx.lineTo(blade.x1,blade.y1);
+            aCtx.stroke();
+            aCtx.closePath();
+        }
+        function drawCircle(){
+            aCtx.beginPath();
+            aCtx.arc(aperCanvas.width/2,aperCanvas.height/2,aperCanvas.width/2,0,2*Math.PI);
+            aCtx.stroke();
+            aCtx.closePath();
+
+            aCtx.beginPath();
+            aCtx.arc(aperCanvas.width/2,aperCanvas.height/2,aperCanvas.width/4,0,2*Math.PI);
+            aCtx.stroke();
+            aCtx.closePath();
+
+            aCtx.beginPath();
+            aCtx.moveTo(100,0);
+            aCtx.lineTo(100,200);
+            aCtx.stroke();            
+            aCtx.moveTo(0,100);
+            aCtx.lineTo(200,100);
+            aCtx.stroke();         
+            aCtx.closePath();
+        }
+        function updateAperture(fStop){
+            var side=aperCanvas.width/2;
+            var hole=20
+            var mult=10
+            var offset=fStop*mult
+            var blade1={
+                x0:0,
+                y0:(aperCanvas.width/2)*1/Math.sqrt(3)+offset,
+                x1:aperCanvas.width/2,
+                y1:0+offset
+            }
+            var blade2={
+                x0:aperCanvas.width/2,
+                y0:0,
+                x1:aperCanvas.width/2+(aperCanvas.width/2)*Math.sqrt(3)/2,
+                y1:aperCanvas.height/4
+            }
+            var blade3={
+                x0:aperCanvas.width/2+(aperCanvas.width/2)*Math.sqrt(3)/2,
+                y0:0,
+                x1:aperCanvas.width/2+(aperCanvas.width/2)*Math.sqrt(3)/2,
+                y1:aperCanvas.height*3/4
+            }
+            var blade4={
+                x0:aperCanvas.width,
+                y0:aperCanvas.height-(aperCanvas.width/2)/Math.sqrt(3),
+                x1:aperCanvas.width/2,
+                y1:aperCanvas.height
+            }
+            var blade5={
+                x0:aperCanvas.width/2,
+                y0:aperCanvas.height,
+                x1:aperCanvas.width/2-(aperCanvas.width/2)*Math.sqrt(3)/2,
+                y1:aperCanvas.height*3/4
+            }
+            var blade6={
+                x0:aperCanvas.width/2-(aperCanvas.width/2-offset)*Math.sqrt(3)/2,
+                y0:aperCanvas.height,
+                x1:aperCanvas.width/2-(aperCanvas.width/2-offset)*Math.sqrt(3)/2,
+                y1:aperCanvas.height/4+offset-offset*Math.tan(Math.PI/6.8)
+            }
+            //aCtx.arc(aperCanvas.width/2,aperCanvas.height/2,aperCanvas.width/2+1,0,2*Math.PI);
+           // aCtx.clip();
+            aCtx.clearRect(0,0,aperCanvas.width,aperCanvas.height);            
+            drawBlade(blade1);
+            drawBlade(blade2);
+            drawBlade(blade3);
+            drawBlade(blade4);            
+            drawBlade(blade5);
+            drawBlade(blade6);
+            drawCircle();
+            aCtx.beginPath();
+            aCtx.moveTo( aperCanvas.width/2+(aperCanvas.width/2)*Math.sqrt(3)/2,aperCanvas.height*3/4)
+            aCtx.lineTo(0,aperCanvas.height*3/4)
+           // aCtx.stroke();
+            aCtx.closePath();
+            
+        }
+    </script>
+    </div>
+</body>
+</html>
